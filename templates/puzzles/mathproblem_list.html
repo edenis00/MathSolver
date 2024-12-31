@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Problems</title>
+  </head>
+
+  <body>
+    {% if math_problems %}
+
+    <h2>Math Problems</h2>
+    <ul>
+      {% for problem in math_problems %}
+      <li>{{ problem.problem }} - {{ problem.solution }}</li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+
+    <p>No math problems found.</p>
+    <a
+      href="{% url 'mathproblem_create' %}"
+      class="bg-blue-500 text-white px-4 py-2 rounded-lg"
+      >Add New Problem</a
+    >
+  </body>
+</html>

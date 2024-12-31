@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Math Problem Solver{% endblock title%} {% block content %}
+<h2>Create a Maths Problem</h2>
+<form method="post">
+    {% csrf_token %}
+    <!-- <div>
+            <label for="problem">Enter your math problem:</label>
+            <textarea name="problem" id="problem" required></textarea>
+        </div>
+        <div>
+            <label for="solution">Solution:</label>
+            <textarea name="solution" id="solution" required></textarea>
+        </div> -->
+    {{ form.as_p }}
+    <button type="submit">Solve</button>
+</form>
+<a href="{% url 'mathproblem_list' %}">Back to Home</a>
+{% endblock %}
