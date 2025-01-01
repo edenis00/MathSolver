@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Math Problems</title>
-  </head>
+{% extends "base.html" %} {% block title %} Math Problems {% endblock title %}
+{% block content %} {% if mathproblems %}
 
-  <body>
-    {% if math_problems %}
+<div class="flex gap-5 mt-5 mb-5 w-[90%] flex-wrap">
+  {% for mathproblem in mathproblems %}
 
-    <h2>Math Problems</h2>
-    <ul>
-      {% for problem in math_problems %}
-      <li>{{ problem.problem }} - {{ problem.solution }}</li>
-      {% endfor %}
-    </ul>
+  <a href="{% url 'mathproblem_detail' mathproblem.id %}"
+    class="shadow-lg rounded-lg bg-white mb-2 min-w-[15%] hover:scale-105 transition-all duration-300">
 
-    {% else %}
+    <div class="bg-gray-400 text-white px-4 py-2 rounded-t-md">
+      <strong>Problem:</strong>
+      <p>{{ mathproblem.question|truncatewords:10 }}</p>
+    </div>
 
-    <p>No math problems found.</p>
-    <a
-      href="{% url 'mathproblem_create' %}"
-      class="bg-blue-500 text-white px-4 py-2 rounded-lg"
-      >Add New Problem</a
-    >
-  </body>
-</html>
+    <div class="px-4 py-2">
+      <strong>Solution:</strong>
+      <p>{{ mathproblem.solution|truncatewords:10 }}</p>
+    </div>
+
+  </a>
+  {% endfor %}
+</div>
+
+{% else %}
+<p>No math problems found.</p>
+{% endif %} {% endblock content %}

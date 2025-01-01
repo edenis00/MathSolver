@@ -1,12 +1,13 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import MathProblem
+from .forms import MathProblemForm
 from django.urls import reverse_lazy
 from .utils import solve_math_problem
 
 # Create your views here.
 class MathProblemCreateView(CreateView):
     model = MathProblem
-    fields = ['questions']
+    form_class = MathProblemForm
     template_name = 'puzzles/mathproblem_form.html'
     success_url = reverse_lazy('mathproblem_list')
     
@@ -25,6 +26,7 @@ class MathProblemCreateView(CreateView):
     
 class MathProblemListView(ListView):
     model = MathProblem
+    form_class = MathProblemForm
     template_name = 'puzzles/mathproblem_list.html'
     context_object_name = 'mathproblems'
     
@@ -34,3 +36,10 @@ class MathProblemDetailView(DetailView):
     template_name = 'puzzles/mathproblem_detail.html'
     context_object_name = 'mathproblem'
     
+    
+    
+class MathProblemUpdateView(UpdateView):
+    model = MathProblem
+    form_class = MathProblemForm
+    template_name = 'puzzles/mathproblem_form.html'
+    success_url = reverse_lazy('mathproblem_detail')    

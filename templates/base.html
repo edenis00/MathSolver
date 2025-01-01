@@ -1,23 +1,29 @@
-{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>{% block title %} Math Problem Solver {% endblock title %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    {% tailwind_css %}
-</head>
+  </head>
 
-<body class="bg-gray-50 font-serif leading-normal tracking-normal">
-    <div class="container mx-auto">
-        <section class="flex flex-col items-center justify-center h-screen">
-            {% block content %}
-            {% endblock content %}
-        </section>
-    </div>
-</body>
-
+  <body class="bg-gray-50 font-sans leading-normal tracking-normal">
+    <header class="flex items-center justify-between p-10 w-full">
+      <h2 class="text-gray-800 text-2xl text-center font-bold mb-2">
+        Math Problems
+      </h2>
+      <a
+        href="{% url 'mathproblem_create' %}"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >Add New Problem</a
+      >
+    </header>
+    <hr class="border" />
+    <main class="container mx-auto">
+      <section class="flex items-center justify-center w-full p-4">
+        {% block content %} {% endblock content %}
+      </section>
+    </main>
+  </body>
 </html>
