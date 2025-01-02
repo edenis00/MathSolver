@@ -1,15 +1,19 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import MathProblem
 from .forms import MathProblemForm
 from django.urls import reverse_lazy
 from .utils import solve_math_problem
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 # Create your views here.
-class MathProblemCreateView(CreateView):
+class MathProblemCreateView(LoginRequiredMixin, CreateView):
     model = MathProblem
     form_class = MathProblemForm
     template_name = 'puzzles/mathproblem_form.html'
     success_url = reverse_lazy('mathproblem_list')
+    login_url = reverse_lazy('login')
     
     def form_valid(self, form):
         question = form.cleaned_data['question']
@@ -38,8 +42,18 @@ class MathProblemDetailView(DetailView):
     
     
     
-class MathProblemUpdateView(UpdateView):
+class MathProblemUpdateView(LoginRequiredMixin, UpdateView):
     model = MathProblem
     form_class = MathProblemForm
     template_name = 'puzzles/mathproblem_form.html'
     success_url = reverse_lazy('mathproblem_detail')    
+    login_url = reverse_lazy('login')
+    
+    
+class RegisterView(CreateView):
+    model = User
+    form_class = UserCreationForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy('login')
+
+    

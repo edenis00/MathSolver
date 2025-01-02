@@ -123,3 +123,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# DEBUG = False
+ALLOWED_HOSTS = ['*']  # Use actual domain or IP in production
+
+LOGIN_REDIRECT_URL = '/'

@@ -1,25 +1,38 @@
-{% extends "base.html" %} {% block title %} Math Problems {% endblock title %}
-{% block content %} {% if mathproblems %}
+{% extends "base.html" %}
+{% block title %} Math Problems {% endblock title %}
+{% block content %}
 
-<div class="flex gap-5 mt-5 mb-5 w-[90%] flex-wrap">
-  {% for mathproblem in mathproblems %}
+{% if mathproblems %}
 
-  <a href="{% url 'mathproblem_detail' mathproblem.id %}"
-    class="shadow-lg rounded-lg bg-white mb-2 min-w-[15%] hover:scale-105 transition-all duration-300">
-
-    <div class="bg-gray-400 text-white px-4 py-2 rounded-t-md">
-      <strong>Problem:</strong>
-      <p>{{ mathproblem.question|truncatewords:10 }}</p>
-    </div>
-
-    <div class="px-4 py-2">
-      <strong>Solution:</strong>
-      <p>{{ mathproblem.solution|truncatewords:10 }}</p>
-    </div>
-
-  </a>
-  {% endfor %}
+<div class="w-full">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-gray-800 font-bold text-2xl">Trending Problems</h2>
+    <a href="#">Sort by</a>
+  </div>
 </div>
+
+<section class="flex gap-4">
+  <div class="flex gap-4 mb-5 w-[70%] flex-wrap max-h-[300px]">
+    {% for mathproblem in mathproblems %}
+
+    <div class="shadow-lg rounded-lg bg-white mb-1 w-full">
+      <div class="px-4 py-2 rounded-md">
+        <a href="{% url 'mathproblem_detail' mathproblem.id %}" class="text-blue-500 font-medium hover:text-blue-600">
+          {{mathproblem.title }}</a>
+      </div>
+      <hr />
+
+      <div class="px-4 py-2">
+        <p>{{ mathproblem.question|truncatewords:10 }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    <h2 class="text-gray-800 font-bold text-xl text-center">Leaderboards</h2>
+  </div>
+</section>
 
 {% else %}
 <p>No math problems found.</p>

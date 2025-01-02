@@ -1,14 +1,27 @@
 {% extends "base.html" %} {% block title %}Math Problem Solver{% endblock title%}
 {% block content %}
 
-<div class="mt-5 w-full text-center bg-white shadow-md p-4 rounded-lg">
-    <h2 class="text-gray-800 font-bold text-2xl mb-5 mt-5">Create a Maths Problem</h2>
+<h2 class="text-gray-800 font-bold text-2xl mb-2 mt-2">Create a Maths Problem</h2>
+<div class="mt-5 w-full bg-white shadow-md p-4 rounded-lg">
     <form method="post">
         {% csrf_token %}
 
         <div class="mb-4">
-            {{ form.question }}
+            <label for="title" class="block text-gray-800 font-medium">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+            <p class="text-red-500 text-sm">{{ form.title.errors }}</p>
+            {% endif %}
         </div>
+
+        <div class="mb-4">
+            <label for="question" class="block text-gray-800 font-medium">Question</label>
+            {{ form.question }}
+            {% if form.question.errors %}
+            <p class="text-red-500 text-sm">{{ form.question.errors }}</p>
+            {% endif %}
+        </div>
+
 
         <button type="submit"
             class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-4 transition-colors">
