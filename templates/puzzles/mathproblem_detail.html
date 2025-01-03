@@ -1,17 +1,17 @@
 {% extends "base.html" %} {% block title %} Math Problem {% endblock title %}
-{% block content %}
+{%block content %}
+<div class="w-full">
+    <a href="{% url 'mathproblem_list' %}"
+        class="font-medium text-xs hover:text-blue-800 transition-all block">&leftarrow;
+        Back to Home</a>
+</div>
 
 <div class="mt-5 w-full bg-white shadow-md p-4 rounded-lg">
     <div class="flex justify-between items-center">
-
         <h2 class="text-gray-800 font-bold text-2xl mb-3 mt-5">Question:</h2>
-
-        <a href="{% url 'mathproblem_list' %}"
-            class="font-medium text-sm hover:text-blue-800 transition-all block">&leftarrow; Back
-            to Home</a>
     </div>
     {% if mathproblem %}
-    <div class="mb-4  border-2 w-full rounded min-h-20 px-4 py-2">
+    <div class="mb-4 border-2 w-full rounded min-h-20 px-4 py-2">
         <p class="">{{ mathproblem.question }}</p>
     </div>
 
@@ -22,22 +22,18 @@
     {% else %}
     <p class="text-center">No Problems found</p>
     {% endif %}
-    <hr>
+    <hr />
     <h2 class="text-gray-800 font-bold text-2xl mb-5 mt-5">Comments</h2>
     <div class="mb-4 bg-gray-100 w-full rounded h-40 px-4 py-2">
-
-        {% if comments %}
-        {% for comment in comments %}
+        {% if comments %} {% for comment in comments %}
         <div class="mb-4">
             <p class="text-gray-800 font-bold">{{ comment.user }}</p>
             <p>{{ comment.comment }}</p>
         </div>
-        {% endfor %}
-        {% else %}
+        {% endfor %} {% else %}
         <p class="text-gray-800 text-center">No comments found</p>
         {% endif %}
-
     </div>
 
-
     {% endblock content %}
+</div>

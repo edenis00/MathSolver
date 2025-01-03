@@ -5,28 +5,88 @@
 {% if mathproblems %}
 
 <div class="w-full">
+  {% if request.GET.q %}
+  <a href="{% url 'mathproblem_list' %}"
+    class="font-medium text-xs hover:text-blue-800 transition-all block">&leftarrow; Back
+    to Home</a>
+  <h2 class="text-gray-800 font-bold text-2xl my-4">Results for {{ request.GET.q }}</h2>
+  <hr class="border-gray-300">
+
+  {% else %}
   <div class="flex justify-between items-center mb-4">
+
     <h2 class="text-gray-800 font-bold text-2xl">Trending Problems</h2>
-    <a href="#">Sort by</a>
+    <div>
+      <a href="#"
+        class="mr-2 border px-4 py-2 text-blue-500 hover:text-white hover:bg-blue-500 rounded-md transition-all duration-300 ">Sort
+        by</a>
+
+      <a href="{% url 'mathproblem_create' %}"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Add</a>
+    </div>
+    {% endif %}
+
   </div>
+  <hr class="border-gray-300">
+
 </div>
 
-<section class="flex gap-4">
-  <div class="flex gap-4 mb-5 w-[70%] flex-wrap max-h-[300px]">
+<section class="flex gap-4 p-2">
+
+  <div class="flex mb-5 w-[70%] flex-wrap max-h-[300px]">
     {% for mathproblem in mathproblems %}
 
-    <div class="shadow-lg rounded-lg bg-white mb-1 w-full">
-      <div class="px-4 py-2 rounded-md">
-        <a href="{% url 'mathproblem_detail' mathproblem.id %}" class="text-blue-500 font-medium hover:text-blue-600">
-          {{mathproblem.title }}</a>
+    <div class="w-full transition duration-200">
+
+      <div class="flex justify-between items-center px-4 py-2 rounded-md">
+        <a href="{% url 'mathproblem_detail' mathproblem.id %}"
+          class="text-blue-500 font-medium hover:text-blue-600 text-lg">
+          {{ mathproblem.title }}
+        </a>
+        <span class="text-sm text-gray-500">on {{ mathproblem.created_at|date:"M d, Y" }}</span>
+
       </div>
-      <hr />
 
       <div class="px-4 py-2">
-        <p>{{ mathproblem.question|truncatewords:10 }}</p>
+        <p class="text-gray-700">{{ mathproblem.question|truncatewords:10 }}</p>
       </div>
+      <hr class=" border-gray-300" />
+
+
     </div>
+
     {% endfor %}
+
+    <div class="w-full flex justify-center my-5 ">
+      <span class="flex  items-center space-x-2">
+
+        {% if page_obj.has_previous %}
+        <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+          class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-all">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+          class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-all">Previous</a>
+        {% else %}
+        <span class="px-4 py-2 rounded bg-gray-400 text-gray-700 cursor-not-allowed">First</span>
+        <span class="px-4 py-2 rounded bg-gray-400 text-gray-700 cursor-not-allowed">Previous</span>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+          class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-all">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"
+          class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 transition-all">Last</a>
+        {% else %}
+        <span class="px-4 py-2 rounded bg-gray-400 text-gray-700 transition-all cursor-not-allowed">Next</span>
+        <span class="px-4 py-2 rounded bg-gray-400 text-gray-700 transition-all cursor-not-allowed">Last</span>
+        {% endif %}
+
+
+      </span>
+    </div>
   </div>
 
   <div>
@@ -35,5 +95,17 @@
 </section>
 
 {% else %}
-<p>No math problems found.</p>
+
+<div class=" my-8 flex justify-center w-full">
+  <a href="{% url 'mathproblem_list' %}"
+    class="font-medium left-0 fixed ml-3 text-xs hover:text-blue-800 transition-all block">&leftarrow;
+    Back
+    to Home</a>
+  <div>
+    <p>No math problems found.</p>
+    <a href="{% url 'mathproblem_create' %}"
+      class="mt-4 inline-block px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all">Add a math
+      problem</a>
+  </div>
+</div>
 {% endif %} {% endblock content %}

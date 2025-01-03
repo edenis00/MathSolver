@@ -4,7 +4,7 @@
     <h2 class="text-gray-800 font-bold text-2xl mb-5">Register</h2>
     <form method="post" action="{% url 'register' %}">
         {% csrf_token %}
-        <!-- <div class="mb-4">
+        <div class="mb-4">
             <label for="username" class="block text-gray-800 font-medium">Username</label>
             <input type="text" name="username" id="username" aria-label="Username"
                 class="w-full p-2 border border-gray-300 rounded-lg" required />
@@ -38,9 +38,9 @@
             {% if form.password2.errors %}
             <p class="text-sm text-red-500">{{ form.password2.errors.0 }}</p>
             {% endif %}
-        </div> -->
+        </div>
 
-        {{ form.as_p }}
+        <!-- {{ form.as_p }} -->
 
         <button type="submit"
             class="bg-blue-500 w-full text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-4 transition-colors">

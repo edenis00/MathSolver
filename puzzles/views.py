@@ -1,5 +1,7 @@
+from django.db.models import Q
 from .models import MathProblem
 from .forms import MathProblemForm
+from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from .utils import solve_math_problem
 from django.contrib.auth.models import User
@@ -30,9 +32,21 @@ class MathProblemCreateView(LoginRequiredMixin, CreateView):
     
 class MathProblemListView(ListView):
     model = MathProblem
-    form_class = MathProblemForm
     template_name = 'puzzles/mathproblem_list.html'
     context_object_name = 'mathproblems'
+    paginate_by = 5
+        
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) |
+                Q(question__icontains=query) |
+                Q(solution__icontains=query)
+            )
+        return queryset
     
     
 class MathProblemDetailView(DetailView):
